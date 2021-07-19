@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue component fundmentals</title>
+  </head>
+  <body>
+    <!-- <div id="app">
+      <h1>Vue component fundmentals</h1>
+      <click-counter></click-counter>
+      <click-counter></click-counter> -->
+
+    <!-- x-template  -->
+    <!-- to have multiple elements, use a single element-div === have only one root element-->
+    <!-- <script type="text/x-template" id="click-counter-template">
+        <div>
+
+         <button @click="count++">{{count}}</button>
+
+        </div>
+      </script>
+    </div> -->
+
+    <div id="app" class="container mx-auto py-6">
+      <div class="content">
+        <h1 class="title">Coffee Plans</h1>
+        <plan-picker></plan-picker>
+
+        <h2 class="subtitle">
+          We travel the world to source the very best single origin coffee for
+          you
+        </h2>
+
+        <plan-picker></plan-picker>
+      </div>
+    </div>
+
+    <!-- nested component -->
+    <script type="text/x-template" id="plan-picker-template">
+      <div class="plans">
+          <!-- components with props(name="props") -->
+          <!-- v-bind: links value of name,which is a prop to js data -plan from loop -->
+          <!-- the code below is the same as having code for 3 components -->
+          <plan v-for="plan in plans" v-bind:name="plan"></plan>
+        </div>
+    </script>
+
+    <!-- x-template for plan-->
+    <script type="text/x-template" id="plan-template">
+      <div class="plan">
+          <div class="description">
+            <span class="title">
+                <!-- name is props -->
+              {{name}}
+            </span>
+          </div>
+        </div>
+    </script>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </body>
+</html>
