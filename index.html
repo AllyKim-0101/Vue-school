@@ -30,6 +30,8 @@
           v-model="newItem"
           placeholder="Add a new item"
         />
+        <!-- linked to computed below to show length of input out of available length -->
+        <!-- <p class="counter">{{characterCount}}/200</p> -->
 
         <!-- insert id and label into items -->
 
@@ -86,8 +88,9 @@
         <!-- :class"[item.purchased ? 'strikeout text-gray' : 'underlined', item.highPriority? 'priority':'']" we can add additional style or class-->
         <!-- multiple classes can be used by using an array or object-->
         <!-- '' means "don't do anything"-->
+        <!-- items === items are in order, reversedItems came from computed and all items will be reversed -->
         <li
-          v-for="(item, key) in items"
+          v-for="(item, key) in reversedItems"
           @click="togglePurchased(item)"
           :key="item.id"
           class="static-class"
@@ -138,6 +141,18 @@
             iceCreamFlavors: [],
           };
         },
+
+        //data munupulation or computation on the webpage. it should always return value inside function
+        //it should not change real data in the backend to aovid potential bugs so we use spread operator for reversing the order of item( newest item should be on the top)
+        computed: {
+          // characterCount() {
+          //   return this.newItem.length;
+          // },
+          reversedItems() {
+            return [...this.items].reverse();
+          },
+        },
+        //when we need to change data, we use method, whereas, when we need to change the presentatio  of exisiting data(visual) we use computed properties
         methods: {
           // this to access to property in data
           saveItem() {
