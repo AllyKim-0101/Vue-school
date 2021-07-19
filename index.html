@@ -27,7 +27,7 @@
         <input
           @keyup.enter="saveItem"
           type="text"
-          v-model.lazy="newItem"
+          v-model="newItem"
           placeholder="Add a new item"
         />
 
@@ -84,12 +84,21 @@
         <!-- :class will define when a css class will be used. when item.purchased is true, the class will be active -->
         <!-- :class"[item.purchased ? 'strikeout' : '']" same as below but -->
         <!-- :class"[item.purchased ? 'strikeout text-gray' : 'underlined', item.highPriority? 'priority':'']" we can add additional style or class-->
+        <!-- multiple classes can be used by using an array or object-->
+        <!-- '' means "don't do anything"-->
         <li
           v-for="(item, key) in items"
+          @click="togglePurchased(item)"
           :key="item.id"
-          :class="{strikeout: item.purchased}"
+          class="static-class"
+          :class="{strikeout: item.purchased, priority: item.highPriority}"
         >
           {{item.label}}
+
+          <!-- "[
+          item.purchased ? 'strikeout text-gray' : 'underlined',
+          item.highPriority ? 'priority' : ''
+          ]" -->
         </li>
       </ul>
     </div>
@@ -132,14 +141,23 @@
         methods: {
           // this to access to property in data
           saveItem() {
-            this.items.push({ id: this.items.length + 1, label: this.newItem });
-            // reset input element - newItem once the above js is executed
+            this.items.push({
+              id: this.items.length + 1,
+              label: this.newItem,
+              highPriority: this.newItemHighPriority,
+            });
+            // reset input element - newItem once the above js is executed abd reset highpriority as well.
             this.newItem = "";
+            this.newItemHighPriority = false;
           },
           doEditing(editing) {
             //the value of editing change depends on the param of doEditing
             this.editing = editing;
             this.newItem = "";
+            this.newItemHighPriority = false;
+          },
+          togglePurchased(item) {
+            item.purchased = !item.purchased;
           },
         },
       }).mount("#shopping-list");
